@@ -16,4 +16,33 @@
 <tr><td>about</td><td>https://www.digibott.com/p/about-us.html</td></tr>
 <tr><td>contact</td><td>https://www.digibott.com/p/contact-us.html</td></tr>
 </table></div>
+
+  <script>
+  (function () {
+    // Get the last path segment (e.g., '1' in '/Redirect/1')
+    const path = window.location.pathname.split('/').filter(Boolean);
+    const key = path.length > 1 ? path[1] : null;
+    if (!key) return; // stay on page if no key
+
+    const table = document.querySelector('#sheettoblogger table');
+    if (!table) return;
+
+    // Loop through table rows and search for a matching key
+    for (const row of table.rows) {
+      const cellKey = row.cells[0]?.textContent?.trim();
+      const url = row.cells[1]?.textContent?.trim();
+
+      if (cellKey === key) {
+        window.location.href = url;
+        return;
+      }
+    }
+
+    // If key not found, optionally redirect to base or show a message
+    if (window.location.href !== 'https://sejlok.github.io/Redirect') {
+      window.location.href = 'https://sejlok.github.io/Redirect';
+    }
+  })();
+</script>
+
 </body>
