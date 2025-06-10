@@ -2,47 +2,57 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <base href="/Redirect/">
   <title>Redirecting...</title>
-  <script>
-    async function redirectFromTable() {
-      const path = window.location.pathname;
-      const keyMatch = path.match(/\/Redirect\/([a-zA-Z0-9]+)/);
-      const key = keyMatch ? keyMatch[1] : null;
-
-      if (!key) {
-        location.href = "https://sejlok.github.io/Redirect/";
-        return;
-      }
-
-      // Load the table from your static HTML page
-      const res = await fetch("/Redirect/redirect-table.html");
-      const html = await res.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, "text/html");
-      const table = doc.querySelector("#sheettoblogger table");
-
-      if (!table) {
-        location.href = "https://sejlok.github.io/Redirect/";
-        return;
-      }
-
-      for (const row of table.rows) {
-        const cellKey = row.cells[0]?.textContent?.trim();
-        const url = row.cells[1]?.textContent?.trim();
-        if (cellKey === key) {
-          location.href = url;
-          return;
-        }
-      }
-
-      // No match found
-      location.href = "https://sejlok.github.io/Redirect/";
-    }
-
-    redirectFromTable();
-  </script>
 </head>
 <body>
-  <p>Redirecting...</p>
+<div id="sheettoblogger"><table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse;">
+<tr><td>youtube</td><td>https://www.youtube.com/@DigiBott?sub_confirmation=1 </td></tr>
+<tr><td>yt</td><td>https://www.youtube.com/@DigiBott?sub_confirmation=1 </td></tr>
+<tr><td>insta</td><td>https://www.instagram.com/DigiBott</td></tr>
+<tr><td>instagram</td><td>https://www.instagram.com/DigiBott</td></tr>
+<tr><td>fb</td><td>https://www.facebook.com/DigiBott</td></tr>
+<tr><td>facebook</td><td>https://www.instagram.com/DigiBott</td></tr>
+<tr><td>twitter</td><td>https://x.com/DigiBott</td></tr>
+<tr><td>x</td><td>https://x.com/DigiBott</td></tr>
+<tr><td>wp</td><td>https://whatsapp.com/channel/0029Va4sbHM3rZZk4IbHWn1u</td></tr>
+<tr><td>whatsapp</td><td>https://whatsapp.com/channel/0029Va4sbHM3rZZk4IbHWn1u</td></tr>
+<tr><td>shorts</td><td>https://www.youtube.com/@DigiBott/shorts?sub_confirmation=1 </td></tr>
+<tr><td>ytshorts</td><td>https://www.youtube.com/@DigiBott/shorts?sub_confirmation=1 </td></tr>
+</table></div>
+
+<script>
+(function () {
+  const prefix = '/Redirect/';
+  const path = window.location.pathname;
+  const idx = path.indexOf(prefix);
+  if (idx === -1) return;
+
+  // Extract only alphanumeric part
+  const raw = path.substring(idx + prefix.length);
+  const match = raw.match(/^[a-zA-Z0-9]+/);
+  const key = match ? match[0] : null;
+  if (!key) return;
+
+  const table = document.querySelector('#sheettoblogger table');
+  if (!table) return;
+
+  for (let i = 0; i < table.rows.length; i++) {
+    const row = table.rows[i];
+    const keyword = row.cells[0]?.textContent?.trim();
+    const url = row.cells[1]?.textContent?.trim();
+
+    if (keyword === key) {
+      window.location.href = url;
+      return;
+    }
+  }
+
+  // Fallback if no match
+  if (window.location.href !== 'https://sejlok.github.io/Redirect') {
+    window.location.href = 'https://sejlok.github.io/Redirect';
+  }
+})();
+</script>
 </body>
 </html>
