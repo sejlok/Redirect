@@ -18,31 +18,31 @@
 </table></div>
 
   <script>
-  (function () {
-    // Get the last path segment (e.g., '1' in '/Redirect/1')
-    const path = window.location.pathname.split('/').filter(Boolean);
-    const key = path.length > 1 ? path[1] : null;
-    if (!key) return; // stay on page if no key
+(function () {
+  const path = window.location.pathname.split('/').filter(Boolean);
+  const key = path[path.length - 1]; // Get the last part of the path (like '23455' or 'amszon')
+  if (!key) return;
 
-    const table = document.querySelector('#sheettoblogger table');
-    if (!table) return;
+  const table = document.querySelector('#sheettoblogger table');
+  if (!table) return;
 
-    // Loop through table rows and search for a matching key
-    for (const row of table.rows) {
-      const cellKey = row.cells[0]?.textContent?.trim();
-      const url = row.cells[1]?.textContent?.trim();
+  for (let i = 0; i < table.rows.length; i++) {
+    const row = table.rows[i];
+    const keyword = row.cells[0]?.textContent?.trim();
+    const url = row.cells[1]?.textContent?.trim();
 
-      if (cellKey === key) {
-        window.location.href = url;
-        return;
-      }
+    if (keyword === key) {
+      window.location.href = url;
+      return;
     }
+  }
 
-    // If key not found, optionally redirect to base or show a message
-    if (window.location.href !== 'https://sejlok.github.io/Redirect') {
-      window.location.href = 'https://sejlok.github.io/Redirect';
-    }
-  })();
+  // Redirect to fallback/base URL if keyword not found
+  if (window.location.href !== 'https://sejlok.github.io/Redirect') {
+    window.location.href = 'https://sejlok.github.io/Redirect';
+  }
+})();
 </script>
+
 
 </body>
