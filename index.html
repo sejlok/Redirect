@@ -20,8 +20,15 @@
 
   <script>
 (function () {
-  const path = window.location.pathname.split('/').filter(Boolean);
-  const key = path[path.length - 1]; // Get the last part of the path (like '23455' or 'amszon')
+  const prefix = '/Redirect/';
+  const path = window.location.pathname;
+  const idx = path.indexOf(prefix);
+  if (idx === -1) return;
+
+  // Get part after '/Redirect/' and keep only leading alphanumeric
+  const raw = path.substring(idx + prefix.length);
+  const match = raw.match(/^[a-zA-Z0-9]+/);
+  const key = match ? match[0] : null;
   if (!key) return;
 
   const table = document.querySelector('#sheettoblogger table');
@@ -44,6 +51,5 @@
   }
 })();
 </script>
-
 
 </body>
