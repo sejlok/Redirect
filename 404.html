@@ -89,12 +89,7 @@
     const url = row.cells[1]?.textContent?.trim();
 
     if (keyword === key) {
-      //window.location.href = url;
-      setTimeout(() => {
-      const newTab = window.open(url, "_blank");
-      window.close(); // May only work if tab was opened by script
-    }, 5000);
-      return;
+      window.location.href = url;
     }
   }
 
