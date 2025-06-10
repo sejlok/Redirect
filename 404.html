@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <base href="/Redirect/">
   <title>Redirecting...</title>
-  <meta http-equiv="refresh" content="5;url=https://www.digibott.com">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -16,11 +14,9 @@
       font-family: sans-serif;
       background-color: #f9f9f9;
     }
-
     h1 {
       margin-bottom: 30px;
     }
-
     .loader {
       width: 80%;
       max-width: 300px;
@@ -29,14 +25,12 @@
       border-radius: 5px;
       overflow: hidden;
     }
-
     .loader-inner {
       height: 100%;
       width: 0;
       background: #3498db;
       animation: loading 5s linear forwards;
     }
-
     @keyframes loading {
       0% { width: 0; }
       100% { width: 100%; }
@@ -48,53 +42,55 @@
   <div class="loader">
     <div class="loader-inner"></div>
   </div>
-  <div id="sheettoblogger" style="display:none;"><table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse;">
-<tr><td>youtube</td><td>https://www.youtube.com/@DigiBott?sub_confirmation=1 </td></tr>
-<tr><td>yt</td><td>https://www.youtube.com/@DigiBott?sub_confirmation=1 </td></tr>
-<tr><td>insta</td><td>https://www.instagram.com/DigiBott</td></tr>
-<tr><td>instagram</td><td>https://www.instagram.com/DigiBott</td></tr>
-<tr><td>fb</td><td>https://www.facebook.com/DigiBott</td></tr>
-<tr><td>facebook</td><td>https://www.instagram.com/DigiBott</td></tr>
-<tr><td>twitter</td><td>https://x.com/DigiBott</td></tr>
-<tr><td>x</td><td>https://x.com/DigiBott</td></tr>
-<tr><td>wp</td><td>https://whatsapp.com/channel/0029Va4sbHM3rZZk4IbHWn1u</td></tr>
-<tr><td>whatsapp</td><td>https://whatsapp.com/channel/0029Va4sbHM3rZZk4IbHWn1u</td></tr>
-<tr><td>shorts</td><td>https://www.youtube.com/@DigiBott/shorts?sub_confirmation=1 </td></tr>
-<tr><td>ytshorts</td><td>https://www.youtube.com/@DigiBott/shorts?sub_confirmation=1 </td></tr>
-</table></div>
 
-<script>
-(function () {
-  const prefix = '/Redirect/';
-  const path = window.location.pathname;
-  const idx = path.indexOf(prefix);
-  if (idx === -1) return;
+  <!-- Hidden keyword-link table -->
+  <div id="sheettoblogger" style="display:none;">
+    <table>
+      <tr><td>youtube</td><td>https://www.youtube.com/@DigiBott?sub_confirmation=1</td></tr>
+      <tr><td>yt</td><td>https://www.youtube.com/@DigiBott?sub_confirmation=1</td></tr>
+      <tr><td>insta</td><td>https://www.instagram.com/DigiBott</td></tr>
+      <tr><td>instagram</td><td>https://www.instagram.com/DigiBott</td></tr>
+      <tr><td>fb</td><td>https://www.facebook.com/DigiBott</td></tr>
+      <tr><td>facebook</td><td>https://www.instagram.com/DigiBott</td></tr>
+      <tr><td>twitter</td><td>https://x.com/DigiBott</td></tr>
+      <tr><td>x</td><td>https://x.com/DigiBott</td></tr>
+      <tr><td>wp</td><td>https://whatsapp.com/channel/0029Va4sbHM3rZZk4IbHWn1u</td></tr>
+      <tr><td>whatsapp</td><td>https://whatsapp.com/channel/0029Va4sbHM3rZZk4IbHWn1u</td></tr>
+      <tr><td>shorts</td><td>https://www.youtube.com/@DigiBott/shorts?sub_confirmation=1</td></tr>
+      <tr><td>ytshorts</td><td>https://www.youtube.com/@DigiBott/shorts?sub_confirmation=1</td></tr>
+      <tr><td>1</td><td>https://www.icloud.com/shortcuts/c393a6a747c84a608f0194d6a211530c</td></tr>
+    </table>
+  </div>
 
-  // Extract only alphanumeric part
-  const raw = path.substring(idx + prefix.length);
-  const match = raw.match(/^[a-zA-Z0-9]+/);
-  const key = match ? match[0] : null;
-  if (!key) return;
+  <script>
+    (function () {
+      // Extract last part of URL after "/Redirect/"
+      const path = window.location.pathname;
+      const parts = path.split("/Redirect/");
+      if (parts.length < 2) return;
 
-  const table = document.querySelector('#sheettoblogger table');
-  if (!table) return;
+      const raw = parts[1];
+      const match = raw.match(/^[a-zA-Z0-9]+/); // Remove special characters
+      const key = match ? match[0] : null;
 
-  for (let i = 0; i < table.rows.length; i++) {
-    const row = table.rows[i];
-    const keyword = row.cells[0]?.textContent?.trim();
-    const url = row.cells[1]?.textContent?.trim();
+      if (!key) return;
 
-    if (keyword === key) {
-      window.location.href = url;
-      return;
-    }
-  }
+      const table = document.querySelector('#sheettoblogger table');
+      if (!table) return;
 
-  // Fallback if no match
-  if (window.location.href !== 'https://sejlok.github.io/Redirect') {
-    window.location.href = 'https://sejlok.github.io/Redirect';
-  }
-})();
-</script>
+      for (const row of table.rows) {
+        const keyword = row.cells[0]?.textContent?.trim();
+        const url = row.cells[1]?.textContent?.trim();
+
+        if (keyword === key) {
+          window.location.replace(url); // Better for redirect
+          return;
+        }
+      }
+
+      // If no match, redirect to main Redirect page
+      window.location.replace('https://sejlok.github.io/Redirect');
+    })();
+  </script>
 </body>
 </html>
