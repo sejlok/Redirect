@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+  <script>
+    async function redirectFromTable() {
+      const path = window.location.pathname;
+      const keyMatch = path.match(/\/Redirect\/([a-zA-Z0-9]+)/);
+      const key = keyMatch ? keyMatch[1] : null;
+
+      if (!key) {
+        location.href = "https://sejlok.github.io/Redirect/";
+        return;
+      }
+
+      // Load the table from your static HTML page
+      const res = await fetch("/Redirect/redirect-table.html");
+      const html = await res.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+      const table = doc.querySelector("#sheettoblogger table");
+
+      if (!table) {
+        location.href = "https://sejlok.github.io/Redirect/";
+        return;
+      }
+
+      for (const row of table.rows) {
+        const cellKey = row.cells[0]?.textContent?.trim();
+        const url = row.cells[1]?.textContent?.trim();
+        if (cellKey === key) {
+          location.href = url;
+          return;
+        }
+      }
+
+      // No match found
+      location.href = "https://sejlok.github.io/Redirect/";
+    }
+
+    redirectFromTable();
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html>
