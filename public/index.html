@@ -23,17 +23,17 @@
       // Get path part after domain
       const path = window.location.pathname.slice(1); // e.g., "1", "2"
       if (!path) {
-        location.replace("https://digibott.com/404");
+        location.replace("https://sejlok.github.io/Redirect/404");
       }
 
       db.collection("redirects").doc(path).get().then((doc) => {
         if (doc.exists) {
           location.replace(doc.data().url);
         } else {
-          location.replace("https://digibott.com/404");
+          location.replace("https://sejlok.github.io/Redirect/404");
         }
       }).catch((error) => {
-        location.replace("https://digibott.com/500");
+        location.replace("https://sejlok.github.io/Redirect/500");
       });
     </script>
   </body>
