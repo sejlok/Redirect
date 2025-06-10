@@ -21,19 +21,17 @@
       const db = firebase.firestore();
 
       // Get path part after domain
-      const path = window.location.pathname.slice(1); // e.g., "1", "2"
-      if (!path) {
-        location.replace("https://sejlok.github.io/Redirect/404");
-      }
-
-      db.collection("redirects").doc(path).get().then((doc) => {
+      const parts = window.location.pathname.split('/');
+      const id = parts[parts.length - 1] || 'default';
+      
+      db.collection("redirects").doc(id).get().then((doc) => {
         if (doc.exists) {
           location.replace(doc.data().url);
         } else {
-          location.replace("https://sejlok.github.io/Redirect/404");
+          document.body.innerHTML = "<h1>Invalid or missing redirect.</h1>";
         }
-      }).catch((error) => {
-        location.replace("https://sejlok.github.io/Redirect/500");
+      }).catch(() => {
+        document.body.innerHTML = "<h1>Error loading redirect.</h1>";
       });
     </script>
   </body>
